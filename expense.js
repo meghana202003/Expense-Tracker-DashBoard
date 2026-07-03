@@ -1,15 +1,40 @@
+// ===== DOM Elements =====
 
-let transactions = JSON.parse(
+const desc = document.querySelector("#desc");
+const amount = document.querySelector("#amount");
+const category = document.querySelector("#category");
+const type = document.querySelector("#type");
 
-localStorage.getItem("expense")
+const addBtn = document.querySelector("#addBtn");
+const tbody = document.querySelector("#tbody");
 
-) || [];
+const incomeEl = document.querySelector("#income");
+const expenseEl = document.querySelector("#expense");
+const balanceEl = document.querySelector("#balance");
 
-function save(){
+const search = document.querySelector("#search");
+const filter = document.querySelector("#filter");
+
+const themeBtn = document.querySelector("#themeBtn");
+
+// ===== State =====
+
+let transactions =
+JSON.parse(localStorage.getItem("transactions"))
+|| [];
+
+let chart;
+
+
+// ========================
+// Save Data
+// ========================
+
+function save() {
 
 localStorage.setItem(
 
-"expense",
+"transactions",
 
 JSON.stringify(transactions)
 
@@ -17,80 +42,256 @@ JSON.stringify(transactions)
 
 }
 
-function addTransaction(){
 
-const desc = document.getElementById(
+// ========================
+// Add Transaction
+// ========================
 
-'desc').value;
+function addTransaction() {
 
-const amount = Number(
+if(
 
-document.getElementById(
+desc.value.trim()===""
 
-'amount').value);
+||
 
-const category =
+amount.value===""
 
-document.getElementById(
+){
 
-'category').value;
+alert(
 
-const type =
+"Please fill all fields"
 
-document.getElementById(
+);
 
-'type').value;
-
-transactions.push({
-
-desc,
-
-amount,
-
-category,
-
-type
-
-});
-
-save();
-
-display();
+return;
 
 }
 
-function display(){
+const transaction = {
 
-let tbody =
+id: crypto.randomUUID(),
 
-document.getElementById(
+description:
 
-'tbody');
+desc.value,
 
-tbody.innerHTML='';
+amount:
 
-let income=0;
+Number(
 
-let expense=0;
+amount.value
 
-transactions.forEach((t,i)=>{
+),
 
-tbody.innerHTML+=`
+category:
 
-<tr>
+category.value,
 
-<td>${t.desc}</td>
+type:
 
-<td>${t.category}</td>
+type.value,
 
-<td>₹${t.amount}</td>
+date:
 
-<td>${t.type}</td>
+new Date()
+
+.toLocaleDateString()
+
+};
+
+transactions.push(
+
+transaction
+
+);
+
+save();
+
+render();
+
+clearInputs();
+
+}
+
+
+// ========================
+// Clear Inputs
+// ========================
+
+function clearInputs(){
+
+desc.value="";
+
+amount.value="";
+
+category.selectedIndex=0;
+
+type.selectedIndex=0;
+
+}
+
+
+// ========================
+// Delete
+// ========================
+
+function deleteTransaction(id){
+
+transactions =
+
+transactions.filter(
+
+t => t.id !== id
+
+);
+
+save();
+
+render();
+
+}
+
+
+// ========================
+// Summary
+// ========================
+
+function calculateSummary(){
+
+const income =
+
+transactions
+
+.filter(
+
+t =>
+
+t.type==="income"
+
+)
+
+.reduce(
+
+(sum,t)=>
+
+sum+t.amount,
+
+0
+
+);
+
+const expense =
+
+transactions
+
+.filter(
+
+t =>
+
+t.type==="expense"
+
+)
+
+.reduce(
+
+(sum,t)=>
+
+sum+t.amount,
+
+0
+
+);
+
+incomeEl.textContent =
+
+`₹${income}`;
+
+expenseEl.textContent =
+
+`₹${expense}`;
+
+balanceEl.textContent =
+
+`₹${income-expense}`;
+
+updateChart(
+
+income,
+
+expense
+
+);
+
+}
+
+
+// ========================
+// Render Table
+// ========================
+
+function render(
+
+list = transactions
+
+){
+
+tbody.innerHTML="";
+
+list.forEach(
+
+t=>{
+
+const row =
+
+document.createElement(
+
+"tr"
+
+);
+
+row.innerHTML = `
 
 <td>
 
-<button onclick=
-"remove(${i})">
+${t.description}
+
+</td>
+
+<td>
+
+${t.category}
+
+</td>
+
+<td>
+
+₹${t.amount}
+
+</td>
+
+<td>
+
+${t.type}
+
+</td>
+
+<td>
+
+${t.date}
+
+</td>
+
+<td>
+
+<button
+
+class="delete"
+
+data-id="${t.id}"
+
+>
 
 Delete
 
@@ -98,55 +299,161 @@ Delete
 
 </td>
 
-</tr>
-
 `;
 
-if(t.type==='income')
+tbody.append(
 
-income+=t.amount;
+row
 
-else
-
-expense+=t.amount;
-
-});
-
-document.getElementById(
-
-'income').innerHTML=
-
-'₹'+income;
-
-document.getElementById(
-
-'expense').innerHTML=
-
-'₹'+expense;
-
-document.getElementById(
-
-'balance').innerHTML=
-
-'₹'+(income-expense);
-
-drawChart(income,expense);
+);
 
 }
 
-function remove(i){
+);
 
-transactions.splice(i,1);
-
-save();
-
-display();
+calculateSummary();
 
 }
 
-let chart;
 
-function drawChart(income,expense){
+// ========================
+// Search
+// ========================
+
+search.addEventListener(
+
+"input",
+
+()=>{
+
+const value =
+
+search.value
+
+.toLowerCase();
+
+const filtered =
+
+transactions.filter(
+
+t=>
+
+t.description
+
+.toLowerCase()
+
+.includes(value)
+
+);
+
+render(filtered);
+
+}
+
+);
+
+
+// ========================
+// Filter
+// ========================
+
+filter.addEventListener(
+
+"change",
+
+()=>{
+
+const value =
+
+filter.value;
+
+if(
+
+value==="all"
+
+){
+
+render();
+
+return;
+
+}
+
+const filtered =
+
+transactions.filter(
+
+t=>
+
+t.type===value
+
+);
+
+render(
+
+filtered
+
+);
+
+}
+
+);
+
+
+// ========================
+// Event Delegation
+// ========================
+
+tbody.addEventListener(
+
+"click",
+
+e=>{
+
+if(
+
+e.target.classList
+
+.contains(
+
+"delete"
+
+)
+
+){
+
+deleteTransaction(
+
+e.target.dataset.id
+
+);
+
+}
+
+}
+
+);
+
+
+// ========================
+// Chart
+// ========================
+
+function updateChart(
+
+income,
+
+expense
+
+){
+
+const ctx =
+
+document.getElementById(
+
+"myChart"
+
+);
 
 if(chart){
 
@@ -156,21 +463,19 @@ chart.destroy();
 
 chart = new Chart(
 
-document.getElementById(
-
-'myChart'),
+ctx,
 
 {
 
-type:'doughnut',
+type:"doughnut",
 
 data:{
 
 labels:[
 
-'Income',
+"Income",
 
-'Expense'
+"Expense"
 
 ],
 
@@ -186,14 +491,34 @@ expense
 
 backgroundColor:[
 
-'green',
+"#22c55e",
 
-'red'
+"#ef4444"
 
-]
+],
+
+borderWidth:0
 
 }]
 
+},
+
+options:{
+
+responsive:true,
+
+plugins:{
+
+legend:{
+
+position:
+
+"bottom"
+
+}
+
+}
+
 }
 
 }
@@ -202,18 +527,88 @@ backgroundColor:[
 
 }
 
-document.getElementById(
 
-'themeBtn')
+// ========================
+// Dark Mode
+// ========================
 
-.onclick=function(){
+themeBtn
 
-document.body.classList.toggle(
+.addEventListener(
 
-'dark'
+"click",
+
+()=>{
+
+document.body
+
+.classList.toggle(
+
+"dark"
+
+);
+
+localStorage
+
+.setItem(
+
+"theme",
+
+document.body
+
+.classList.contains(
+
+"dark"
+
+)
 
 );
 
 }
 
-display();
+);
+
+
+// ========================
+// Load Theme
+// ========================
+
+if(
+
+localStorage.getItem(
+
+"theme"
+
+)==="true"
+
+){
+
+document.body
+
+.classList.add(
+
+"dark"
+
+);
+
+}
+
+
+// ========================
+// Add Button
+// ========================
+
+addBtn.addEventListener(
+
+"click",
+
+addTransaction
+
+);
+
+
+// ========================
+// Initial Render
+// ========================
+
+render();
