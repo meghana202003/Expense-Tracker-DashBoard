@@ -1,19 +1,20 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-    <title>Expense Tracker Dashboard</title>
+<title>Expense Tracker Dashboard</title>
 
-    <link rel="stylesheet"
-          href="expense.css">
+<link rel="stylesheet"
+href="expense.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
@@ -21,241 +22,365 @@
 
 <div class="container">
 
-    <!-- Header -->
+<!-- Header -->
 
-    <header>
+<header>
 
-        <h1>Expense Tracker Dashboard</h1>
+<h1>
 
-        <button id="themeBtn">
+Expense Tracker Dashboard
 
-            🌙 Dark Mode
+</h1>
 
-        </button>
+<button id="themeBtn">
 
-    </header>
+🌙 Dark Mode
 
+</button>
 
-    <!-- Summary Cards -->
+</header>
 
-    <section class="cards">
 
-        <div class="card income">
+<!-- Summary Cards -->
 
-            <h3>Total Income</h3>
+<section class="cards">
 
-            <p id="income">
+<div class="card income">
 
-                ₹0
+<h3>
 
-            </p>
+Total Income
 
-        </div>
+</h3>
 
-        <div class="card expense">
+<p id="income">
 
-            <h3>Total Expense</h3>
+₹0
 
-            <p id="expense">
+</p>
 
-                ₹0
+</div>
 
-            </p>
+<div class="card expense">
 
-        </div>
+<h3>
 
-        <div class="card balance">
+Total Expense
 
-            <h3>Balance</h3>
+</h3>
 
-            <p id="balance">
+<p id="expense">
 
-                ₹0
+₹0
 
-            </p>
+</p>
 
-        </div>
+</div>
 
-    </section>
+<div class="card balance">
 
+<h3>
 
-    <!-- Transaction Form -->
+Balance
 
-    <section class="formBox">
+</h3>
 
-        <input
-            type="text"
-            id="desc"
-            placeholder="Description">
+<p id="balance">
 
-        <input
-            type="number"
-            id="amount"
-            placeholder="Amount">
+₹0
 
-        <select id="category">
+</p>
 
-            <option value="Food">
+</div>
 
-                Food
+</section>
 
-            </option>
 
-            <option value="Travel">
+<!-- Extra Statistics -->
 
-                Travel
+<section class="stats">
 
-            </option>
+<div class="statsBox">
 
-            <option value="Shopping">
+<h4>
 
-                Shopping
+Transactions
 
-            </option>
+</h4>
 
-            <option value="Bills">
+<p>
 
-                Bills
+<span id="count">
 
-            </option>
+0
 
-            <option value="Salary">
+</span>
 
-                Salary
+</p>
 
-            </option>
+</div>
 
-            <option value="Entertainment">
+<div class="statsBox">
 
-                Entertainment
+<h4>
 
-            </option>
+Monthly Expense
 
-            <option value="Other">
+</h4>
 
-                Other
+<p id="monthExpense">
 
-            </option>
+₹0
 
-        </select>
+</p>
 
+</div>
 
-        <select id="type">
+</section>
 
-            <option value="income">
 
-                Income
+<!-- Transaction Form -->
 
-            </option>
+<section class="formBox">
 
-            <option value="expense">
+<input
 
-                Expense
+type="text"
 
-            </option>
+id="desc"
 
-        </select>
+placeholder="Description">
 
+<input
 
-        <button id="addBtn">
+type="number"
 
-            Add Transaction
+id="amount"
 
-        </button>
+placeholder="Amount">
 
-    </section>
+<select id="category">
 
+<option value="Food">
 
-    <!-- Search and Filter -->
+Food
 
-    <section class="controls">
+</option>
 
-        <input
-            type="text"
-            id="search"
-            placeholder="Search Transactions">
+<option value="Travel">
 
-        <select id="filter">
+Travel
 
-            <option value="all">
+</option>
 
-                All Transactions
+<option value="Shopping">
 
-            </option>
+Shopping
 
-            <option value="income">
+</option>
 
-                Income
+<option value="Bills">
 
-            </option>
+Bills
 
-            <option value="expense">
+</option>
 
-                Expense
+<option value="Salary">
 
-            </option>
+Salary
 
-        </select>
+</option>
 
-    </section>
+<option value="Entertainment">
 
+Entertainment
 
-    <!-- Table -->
+</option>
 
-    <section class="tableBox">
+<option value="Other">
 
-        <table>
+Other
 
-            <thead>
+</option>
 
-                <tr>
+</select>
 
-                    <th>Description</th>
+<select id="type">
 
-                    <th>Category</th>
+<option value="income">
 
-                    <th>Amount</th>
+Income
 
-                    <th>Type</th>
+</option>
 
-                    <th>Date</th>
+<option value="expense">
 
-                    <th>Action</th>
+Expense
 
-                </tr>
+</option>
 
-            </thead>
+</select>
 
-            <tbody id="tbody">
+<button id="addBtn">
 
-            </tbody>
+Add Transaction
 
-        </table>
+</button>
 
-    </section>
+</section>
 
 
-    <!-- Chart -->
+<!-- Search & Filter -->
 
-    <section class="chartBox">
+<section class="controls">
 
-        <h2>
+<input
 
-            Expense Analytics
+type="text"
 
-        </h2>
+id="search"
 
-        <canvas id="myChart">
+placeholder="Search Transactions">
 
-        </canvas>
+<select id="filter">
 
-    </section>
+<option value="all">
+
+All Transactions
+
+</option>
+
+<option value="income">
+
+Income
+
+</option>
+
+<option value="expense">
+
+Expense
+
+</option>
+
+</select>
+
+</section>
+
+
+<!-- Extra Action Buttons -->
+
+<section class="actionButtons">
+
+<button id="sortAmount">
+
+Sort Amount
+
+</button>
+
+<button id="sortDate">
+
+Sort Date
+
+</button>
+
+<button id="export">
+
+Export CSV
+
+</button>
+
+<button id="clearAll">
+
+Clear All
+
+</button>
+
+</section>
+
+
+<!-- Table -->
+
+<section class="tableBox">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+
+Description
+
+</th>
+
+<th>
+
+Category
+
+</th>
+
+<th>
+
+Amount
+
+</th>
+
+<th>
+
+Type
+
+</th>
+
+<th>
+
+Date
+
+</th>
+
+<th>
+
+Action
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tbody">
+
+</tbody>
+
+</table>
+
+</section>
+
+
+<!-- Chart -->
+
+<section class="chartBox">
+
+<h2>
+
+Expense Analytics
+
+</h2>
+
+<canvas id="myChart">
+
+</canvas>
+
+</section>
 
 </div>
 
 
-<script src="expense.js"></script>
+<script src="expense.js">
+
+</script>
 
 </body>
 
 </html>
+```
