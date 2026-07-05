@@ -1,0 +1,499 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    overflow:hidden;
+
+    background:
+
+    linear-gradient(
+
+    135deg,
+
+    #ffd6e8,
+
+    #ffe8f1,
+
+    #fff5f8
+
+    );
+
+    position:relative;
+
+}
+
+/* Floating Hearts Background */
+
+.hearts{
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:100%;
+
+    overflow:hidden;
+
+    z-index:0;
+
+}
+
+.hearts::before{
+
+    content:"❤ ❤ ❤ ❤ ❤ ❤ ❤ ❤ ❤ ❤";
+
+    position:absolute;
+
+    width:100%;
+
+    font-size:25px;
+
+    color:rgba(255,79,136,.15);
+
+    animation:floatHearts 15s linear infinite;
+
+}
+
+@keyframes floatHearts{
+
+0%{
+
+transform:translateY(100vh);
+
+}
+
+100%{
+
+transform:translateY(-120vh);
+
+}
+
+}
+
+/* Sparkles */
+
+.sparkles{
+
+    position:absolute;
+
+    width:100%;
+
+    height:100%;
+
+    z-index:0;
+
+    background-image:
+
+    radial-gradient(
+
+    rgba(255,255,255,.8) 1px,
+
+    transparent 1px
+
+    );
+
+    background-size:60px 60px;
+
+    animation:twinkle 5s infinite;
+
+}
+
+@keyframes twinkle{
+
+0%{
+
+opacity:.4;
+
+}
+
+50%{
+
+opacity:.9;
+
+}
+
+100%{
+
+opacity:.4;
+
+}
+
+}
+
+/* Main Container */
+
+.container{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:5;
+
+}
+
+/* Card */
+
+.card{
+
+    width:600px;
+
+    max-width:90%;
+
+    background:white;
+
+    border-radius:30px;
+
+    padding:40px;
+
+    text-align:center;
+
+    box-shadow:
+
+    0 15px 50px rgba(
+
+    255,
+
+    105,
+
+    180,
+
+    .25
+
+    );
+
+    position:relative;
+
+    z-index:10;
+
+}
+
+/* Title */
+
+.card h1{
+
+    color:#ff4f88;
+
+    font-size:32px;
+
+    margin-bottom:15px;
+
+}
+
+/* Counter */
+
+#count{
+
+    color:#ff77aa;
+
+    font-weight:600;
+
+    margin-bottom:20px;
+
+}
+
+/* Animated Text */
+
+#text{
+
+    min-height:120px;
+
+    font-size:21px;
+
+    line-height:1.8;
+
+    color:#444;
+
+    transition:.3s;
+
+}
+
+/* Buttons */
+
+.buttons{
+
+    display:none;
+
+    justify-content:center;
+
+    gap:15px;
+
+    margin-top:30px;
+
+}
+
+/* Button Base */
+
+button{
+
+    padding:14px 28px;
+
+    border:none;
+
+    border-radius:40px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+/* Yes */
+
+#yesBtn{
+
+    background:#ff4f88;
+
+    color:white;
+
+}
+
+#yesBtn:hover{
+
+    background:#ff2d70;
+
+    transform:scale(1.08);
+
+}
+
+/* No */
+
+#noBtn{
+
+    background:#ffd8e8;
+
+    color:#444;
+
+}
+
+#noBtn:hover{
+
+    transform:scale(1.08);
+
+    background:#ffc3d9;
+
+}
+
+/* Envelope */
+
+.envelope{
+
+    display:none;
+
+    font-size:70px;
+
+    margin-top:25px;
+
+    cursor:pointer;
+
+    animation:bounce 1s infinite;
+
+}
+
+@keyframes bounce{
+
+0%{
+
+transform:translateY(0);
+
+}
+
+50%{
+
+transform:translateY(-10px);
+
+}
+
+100%{
+
+transform:translateY(0);
+
+}
+
+}
+
+/* Letter */
+
+#letter{
+
+    display:none;
+
+    margin-top:30px;
+
+    text-align:left;
+
+    padding:25px;
+
+    background:#fff2f7;
+
+    border-radius:18px;
+
+    line-height:1.9;
+
+    color:#444;
+
+    max-height:350px;
+
+    overflow-y:auto;
+
+    animation:fadeIn 1s ease;
+
+}
+
+#letter h2{
+
+    color:#ff4f88;
+
+    margin-bottom:15px;
+
+}
+
+/* Scrollbar */
+
+#letter::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+#letter::-webkit-scrollbar-thumb{
+
+    background:#ff9fc1;
+
+    border-radius:10px;
+
+}
+
+#letter::-webkit-scrollbar-track{
+
+    background:#ffe8f0;
+
+}
+
+/* Fade */
+
+@keyframes fadeIn{
+
+0%{
+
+opacity:0;
+
+transform:translateY(20px);
+
+}
+
+100%{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+/* Mobile */
+
+@media(max-width:700px){
+
+.card{
+
+padding:30px;
+
+}
+
+.card h1{
+
+font-size:26px;
+
+}
+
+#text{
+
+font-size:18px;
+
+min-height:150px;
+
+}
+
+.buttons{
+
+flex-direction:column;
+
+}
+
+button{
+
+width:100%;
+
+}
+
+.envelope{
+
+font-size:60px;
+
+}
+
+}
+
+@media(max-width:450px){
+
+.card{
+
+padding:25px;
+
+}
+
+.card h1{
+
+font-size:22px;
+
+}
+
+#text{
+
+font-size:17px;
+
+}
+
+#letter{
+
+font-size:15px;
+
+padding:18px;
+
+}
+
+}
+
+
+
+
+
+
+
