@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    overflow:hidden;
+
+    background:
+
+    linear-gradient(
+
+    135deg,
+
+    #ffd6e8,
+
+    #ffe8f1,
+
+    #fff5f8
+
+    );
+
+    position:relative;
+
+}
+
+/* Floating Hearts Background */
+
+.hearts{
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
